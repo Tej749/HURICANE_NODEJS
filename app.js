@@ -1,14 +1,28 @@
+require("dotenv").config();
 const express = require("express");
+const conncetToDatabase = require("./database");
 const app = express();
 
+conncetToDatabase();
+
 app.get("/", (req, res) => {
-  res.send("Hellow World ...Home Page...");
+  res.json({
+    message: "Hello World ....This is Home Page...!!",
+  });
 });
 
 app.get("/about", (req, res) => {
-  res.send("Welcome to About pages....");
+  res.json({
+    message: "Welcome to About pages....",
+  });
 });
 
-app.listen(3000, () => {
+app.get("/contact", (req, res) => {
+  res.json({
+    message: "This is Contact Pages.....",
+  });
+});
+
+app.listen(process.env.PORT, () => {
   console.log("Huricane Project is started....");
 });
