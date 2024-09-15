@@ -32,8 +32,28 @@ app.get("/contact", (req, res) => {
   });
 });
 
-app.post("/blog", (req, res) => {
-  console.log(req.body);
+app.post("/blog", async (req, res) => {
+  // const title = req.body.title
+  // const subtile = req.body.subtile
+  // const description = req.body.description
+  // const image = req.body.image
+  console.log();
+
+  const { title, subtitle, description, image } = req.body;
+  if (!title || !subtitle || !description || !image) {
+    return res.status(400).json({
+      message: "Please complete title, subtitle, description & image...",
+    });
+  }
+
+  await Blog.create({
+    title: title,
+    subtile: subtitle,
+    description: description,
+    image: image,
+  });
+
+  console.log(title, subtitle, description, image);
   res.status(200).json({
     message: "Blog api hit successfully....",
   });
