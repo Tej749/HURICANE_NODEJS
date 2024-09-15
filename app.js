@@ -17,6 +17,12 @@ app.get("/about", (req, res) => {
   });
 });
 
+app.get("/profile", (req, res) => {
+  res.json({
+    message: "This is profile page..",
+  });
+});
+
 app.get("/contact", (req, res) => {
   res.json({
     message: "This is Contact Pages.....",
