@@ -6,7 +6,7 @@ const blogSchema = new Schema({
     type: String,
     unique: true,
   },
-  subtile: {
+  subtitle: {
     type: String,
   },
   description: {

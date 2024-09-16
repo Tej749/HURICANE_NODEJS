@@ -2,60 +2,23 @@ require("dotenv").config();
 const express = require("express");
 const conncetToDatabase = require("./database");
 const Blog = require("./model/blogModel");
-
 const app = express();
 app.use(express.json()); // express / node.js can understand post data
+const { multer, storage } = require("./middleware/multerConfig");
+const upload = multer({ storage: storage });
 
 conncetToDatabase(); // help to connect with database
 
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
     message: "Hello World ....This is Home Page...!!",
   });
 });
 
-app.get("/about", (req, res) => {
-  res.json({
-    message: "Welcome to About pages....",
-  });
-});
-
-app.get("/profile", (req, res) => {
-  res.json({
-    message: "This is profile page..",
-  });
-});
-
-app.get("/contact", (req, res) => {
+app.post("/blog", upload.single("image"), (req, res) => {
+  console.log(req.body);
   res.status(200).json({
-    message: "This is Contact Pages.....",
-  });
-});
-
-app.post("/blog", async (req, res) => {
-  // const title = req.body.title
-  // const subtile = req.body.subtile
-  // const description = req.body.description
-  // const image = req.body.image
-  console.log();
-
-  const { title, subtitle, description, image } = req.body;
-  if (!title || !subtitle || !description || !image) {
-    return res.status(400).json({
-      message: "Please complete title, subtitle, description & image...",
-    });
-  }
-
-  await Blog.create({
-    title: title,
-    subtile: subtitle,
-    description: description,
-    image: image,
-  });
-
-  console.log(title, subtitle, description, image);
-  res.status(200).json({
-    message: "Blog api hit successfully....",
+    message: "Blog api hit successfully...",
   });
 });
 
